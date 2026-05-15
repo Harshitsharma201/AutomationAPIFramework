@@ -20,7 +20,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      checks: write
+      issues: write
     steps:
     - uses: actions/checkout@v4
 
@@ -34,12 +37,14 @@ jobs:
     - name: Build and Run Tests
       run: mvn clean test -Dsuite=suite
 
-    - name: Upload Test Logs
+    - name: Upload a Build Artifact
       if: always() # Runs even if tests fail
       uses: actions/upload-artifact@v4
       with:
         name: Execution-Logs
         path: logs/
+
+    
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     
